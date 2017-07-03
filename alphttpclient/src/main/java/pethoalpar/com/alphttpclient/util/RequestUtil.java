@@ -14,17 +14,15 @@ public class RequestUtil {
 
     public static byte[] getBytes(InputStream inputStream){
         try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-            int nRead;
-            byte[] data = new byte[16384];
-
-            while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
             }
-            buffer.flush();
-            return buffer.toByteArray();
-        } catch (IOException e) {
+            return output.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return null;

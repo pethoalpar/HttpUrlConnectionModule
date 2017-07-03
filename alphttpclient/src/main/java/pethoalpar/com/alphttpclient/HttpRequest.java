@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -12,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,17 +20,17 @@ import pethoalpar.com.alphttpclient.util.RequestUtil;
 /**
  * Created by pethoalpar on 4/16/2016.
  */
-public class HttpRequest extends AsyncTask<HttpCall, String, InputStream>{
+public class HttpRequest extends AsyncTask<HttpCall, String, byte[]> {
 
     private static final String UTF_8 = "UTF-8";
     private static String session;
     private HttpCall httpCall = null;
 
     @Override
-    protected InputStream doInBackground(HttpCall... params) {
+    protected byte[] doInBackground(HttpCall... params) {
         HttpURLConnection urlConnection = null;
         httpCall = params[0];
-        InputStream retIs = null;
+        byte[] retIs = null;
         try{
             String dataParams = getDataString(httpCall.getParams(), httpCall.getMethodtype());
             URL url = new URL(httpCall.getMethodtype() == HttpCall.GET ? httpCall.getUrl() + dataParams : httpCall.getUrl());
@@ -53,7 +53,7 @@ public class HttpRequest extends AsyncTask<HttpCall, String, InputStream>{
             int responseCode = urlConnection.getResponseCode();
             getSession(urlConnection);
             if(responseCode == HttpURLConnection.HTTP_OK){
-                retIs=urlConnection.getInputStream();
+                retIs = RequestUtil.getBytes(urlConnection.getInputStream());
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -86,12 +86,12 @@ public class HttpRequest extends AsyncTask<HttpCall, String, InputStream>{
     }
 
     @Override
-    protected void onPostExecute(InputStream inputStream) {
-        super.onPostExecute(inputStream);
+    protected void onPostExecute(byte[] data) {
+        super.onPostExecute(data);
         if(httpCall != null && HttpCall.BYTE_ARRAY == httpCall.getReturnTye()){
-            onResponseByteArray(RequestUtil.getBytes(inputStream));
+            onResponseByteArray(data);
         }else{
-            onResponseString(RequestUtil.getString(inputStream));
+            onResponseString(new String(data, Charset.forName("UTF-8")));
         }
     }
 
@@ -124,4 +124,5 @@ public class HttpRequest extends AsyncTask<HttpCall, String, InputStream>{
         }
         return result.toString();
     }
+
 }
