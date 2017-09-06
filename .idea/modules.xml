@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HttpRequestExample.iml" filepath="$PROJECT_DIR$/HttpRequestExample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HttpUrlConnectionExample.iml" filepath="$PROJECT_DIR$/HttpUrlConnectionExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HttpUrlConnectionModule.iml" filepath="$PROJECT_DIR$/HttpUrlConnectionModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/alphttpclient/alphttpclient.iml" filepath="$PROJECT_DIR$/alphttpclient/alphttpclient.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

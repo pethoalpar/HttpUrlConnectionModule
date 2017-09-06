@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 httpCall.setParams(params);
                 new HttpRequest(){
                     @Override
-                    public void onResponse(String response) {
-                        super.onResponse(response);
+                    public void onResponseString(String response) {
+                        super.onResponseString(response);
                         Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                     }
                 }.execute(httpCall);
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 httpCall.setParams(params);
                 new HttpRequest(){
                     @Override
-                    public void onResponse(String response) {
-                        super.onResponse(response);
+                    public void onResponseString(String response) {
+                        super.onResponseString(response);
                         Toast.makeText(getApplicationContext(),"Add:"+response,Toast.LENGTH_SHORT).show();
                     }
                 }.execute(httpCall);
@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 httpCall.setUrl(ADDRESS + "/data/getAllCars");
                 new HttpRequest(){
                     @Override
-                    public void onResponse(String response) {
-                        super.onResponse(response);
+                    public void onResponseString(String response) {
+                        super.onResponseString(response);
                         Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                     }
                 }.execute(httpCall);
@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 httpCall.setUrl(ADDRESS + "/logout");
                 new HttpRequest(){
                     @Override
-                    public void onResponse(String response) {
-                        super.onResponse(response);
+                    public void onResponseString(String response) {
+                        super.onResponseString(response);
                         Toast.makeText(getApplicationContext(),"Logout:"+response,Toast.LENGTH_SHORT).show();
                     }
                 }.execute(httpCall);

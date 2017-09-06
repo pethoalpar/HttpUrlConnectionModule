@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -30,7 +31,7 @@ public class HttpRequest extends AsyncTask<HttpCall, String, byte[]> {
     protected byte[] doInBackground(HttpCall... params) {
         HttpURLConnection urlConnection = null;
         httpCall = params[0];
-        byte[] retIs = null;
+        byte[] retIs = "Connection error".getBytes();
         try{
             String dataParams = getDataString(httpCall.getParams(), httpCall.getMethodtype());
             URL url = new URL(httpCall.getMethodtype() == HttpCall.GET ? httpCall.getUrl() + dataParams : httpCall.getUrl());
@@ -53,7 +54,12 @@ public class HttpRequest extends AsyncTask<HttpCall, String, byte[]> {
             int responseCode = urlConnection.getResponseCode();
             getSession(urlConnection);
             if(responseCode == HttpURLConnection.HTTP_OK){
-                retIs = RequestUtil.getBytes(urlConnection.getInputStream());
+                InputStream is = urlConnection.getInputStream();
+                if(is != null) {
+                    retIs = RequestUtil.getBytes(urlConnection.getInputStream());
+                }
+            } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED){
+                retIs = "Unathorized".getBytes();
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
